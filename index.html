@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2a1813">
+  <meta name="description" content="Claudia Coffee menu in Prague - coffee classics, seasonal drinks and homemade sweets in English, Czech and French.">
+  <title>Claudia Coffee | Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --coffee: #2a1813;
+      --coffee-2: #3b2119;
+      --cream: #f6ecd8;
+      --paper: #fbf4e6;
+      --ink: #2b1b16;
+      --copper: #b8734c;
+      --copper-dark: #925238;
+      --line: rgba(72, 42, 31, .22);
+      --muted: #775f53;
+      --shadow: 0 30px 80px rgba(36, 18, 12, .18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(184, 115, 76, .16), transparent 28rem),
+        radial-gradient(circle at 88% 88%, rgba(42, 24, 19, .09), transparent 30rem),
+        #e8dac4;
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .24;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      width: min(1080px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 40px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--cream);
+      border: 2px solid rgba(42, 24, 19, .18);
+      box-shadow: 0 8px 22px rgba(42, 24, 19, .16);
+    }
+
+    .brand-fallback {
+      display: none;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
+      border: 2px solid var(--coffee);
+      border-radius: 50%;
+      background: var(--cream);
+      font: 700 1rem/1 "Playfair Display", serif;
+      letter-spacing: .04em;
+    }
+
+    .brand-copy { min-width: 0; }
+
+    .brand-name {
+      display: block;
+      font: 700 clamp(1rem, 3vw, 1.25rem)/1.1 "Playfair Display", serif;
+      letter-spacing: .015em;
+    }
+
+    .brand-place {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .languages {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      gap: 3px;
+      border: 1px solid rgba(42, 24, 19, .18);
+      border-radius: 999px;
+      background: rgba(251, 244, 230, .72);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(42, 24, 19, .08);
+    }
+
+    .lang-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 9px 11px;
+      color: var(--muted);
+      background: transparent;
+      font: 700 .72rem/1 "DM Sans", sans-serif;
+      letter-spacing: .08em;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .lang-btn:hover { color: var(--coffee); }
+
+    .lang-btn[aria-pressed="true"] {
+      color: var(--cream);
+      background: var(--coffee);
+      box-shadow: 0 5px 12px rgba(42, 24, 19, .2);
+    }
+
+    .menu-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(72, 42, 31, .18);
+      border-radius: 28px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .menu-card::before,
+    .menu-card::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .menu-card::before {
+      inset: 12px;
+      border: 1px solid rgba(146, 82, 56, .38);
+    }
+
+    .menu-card::after {
+      inset: 18px;
+      border: 1px solid rgba(146, 82, 56, .16);
+    }
+
+    .menu-inner {
+      position: relative;
+      z-index: 1;
+      padding: clamp(32px, 7vw, 70px) clamp(24px, 7vw, 76px) 32px;
+    }
+
+    .menu-head {
+      max-width: 720px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--copper-dark);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--coffee);
+      font: 700 clamp(3.2rem, 11vw, 7rem)/.86 "Playfair Display", serif;
+      letter-spacing: -.035em;
+    }
+
+    .script {
+      margin: 10px 0 0;
+      color: var(--copper-dark);
+      font: 700 clamp(1.55rem, 5vw, 2.5rem)/1 "Caveat", cursive;
+      transform: rotate(-1deg);
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      width: min(330px, 78%);
+      margin: 22px auto;
+      color: var(--copper);
+    }
+
+    .ornament::before,
+    .ornament::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: currentColor;
+      opacity: .6;
+    }
+
+    .intro {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.65;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 56px;
+      align-items: start;
+    }
+
+    .menu-group {
+      break-inside: avoid;
+      padding: 10px 0 4px;
+    }
+
+    .menu-group + .menu-group { margin-top: 25px; }
+
+    .group-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 3px;
+    }
+
+    .group-title-row h2 {
+      margin: 0;
+      color: var(--coffee);
+      font: 700 clamp(1.65rem, 4vw, 2.35rem)/1.08 "Playfair Display", serif;
+    }
+
+    .group-title-row::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid rgba(146, 82, 56, .34);
+    }
+
+    .group-subtitle {
+      margin: 0 0 18px;
+      color: var(--copper-dark);
+      font: 700 1.15rem/1 "Caveat", cursive;
+    }
+
+    .menu-item { padding: 10px 0 11px; }
+
+    .item-line {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .item-name {
+      font-family: "Playfair Display", serif;
+      font-size: 1.04rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .item-dots {
+      flex: 1;
+      min-width: 20px;
+      border-bottom: 1px dotted rgba(72, 42, 31, .27);
+      transform: translateY(-3px);
+    }
+
+    .menu-item p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.45;
+    }
+
+    .menu-note {
+      margin-top: 38px;
+      padding: 21px 22px;
+      border: 1px solid rgba(146, 82, 56, .28);
+      border-radius: 18px;
+      background: rgba(184, 115, 76, .07);
+      text-align: center;
+    }
+
+    .menu-note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--coffee);
+      font: 700 1.15rem/1.3 "Playfair Display", serif;
+    }
+
+    .menu-note span {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      padding: 24px 2px 2px;
+      color: #6d564c;
+      font-size: .82rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px 16px;
+    }
+
+    .footer a {
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(72, 42, 31, .28);
+    }
+
+    .footer a:hover { color: var(--coffee); }
+
+    @media (max-width: 760px) {
+      .page-shell { width: min(100% - 18px, 680px); padding-top: 12px; }
+      .topbar { padding: 0 4px; }
+      .brand-place { display: none; }
+      .brand-logo, .brand-fallback { width: 50px; height: 50px; }
+      .menu-card { border-radius: 22px; }
+      .menu-card::before { inset: 8px; }
+      .menu-card::after { inset: 13px; }
+      .menu-inner { padding: 31px 23px 24px; }
+      .menu-head { margin-bottom: 28px; }
+      .menu-grid { grid-template-columns: 1fr; gap: 0; }
+      .menu-group + .menu-group { margin-top: 19px; }
+      .menu-item { padding: 8px 0 9px; }
+      .footer { flex-direction: column; align-items: flex-start; padding: 20px 5px 4px; }
+      .footer-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 430px) {
+      .topbar { gap: 10px; }
+      .brand { gap: 8px; }
+      .brand-name { font-size: .94rem; }
+      .languages { padding: 3px; }
+      .lang-btn { padding: 8px 9px; font-size: .67rem; }
+      .menu-inner { padding-inline: 20px; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 10mm; }
+      body { background: #fff; }
+      body::before, .topbar, .footer { display: none !important; }
+      .page-shell { width: 100%; padding: 0; }
+      .menu-card { border: 1px solid #7c5f52; border-radius: 0; box-shadow: none; }
+      .menu-inner { padding: 17mm 14mm 12mm; }
+      .menu-head { margin-bottom: 8mm; }
+      h1 { font-size: 45pt; }
+      .script { font-size: 20pt; }
+      .intro { font-size: 10pt; }
+      .menu-grid { gap: 7mm 12mm; }
+      .group-title-row h2 { font-size: 17pt; }
+      .menu-item { padding: 2.1mm 0; }
+      .item-name { font-size: 9.5pt; }
+      .menu-item p { font-size: 7.8pt; }
+      .menu-note { margin-top: 7mm; padding: 4mm; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="Claudia Coffee">
+        <img class="brand-logo" id="brand-logo" src="https://claudiacoffee.vercel.app/assets/logo.svg" alt="Claudia Coffee logo" width="58" height="58">
+        <span class="brand-fallback" id="brand-fallback" aria-hidden="true">CC</span>
+        <span class="brand-copy">
+          <span class="brand-name">Claudia Coffee</span>
+          <span class="brand-place">Prague · Most Legií</span>
+        </span>
+      </div>
+
+      <div class="languages" role="group" aria-label="Language">
+        <button class="lang-btn" type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" type="button" data-lang="cs" aria-pressed="false">CZ</button>
+        <button class="lang-btn" type="button" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+    </header>
+
+    <main class="menu-card">
+      <div class="menu-inner">
+        <header class="menu-head">
+          <p class="eyebrow" data-i18n="kicker">Claudia Coffee · Prague</p>
+          <h1 data-i18n="menu">MENU</h1>
+          <p class="script" data-i18n="script">coffee, colour & Prague</p>
+          <div class="ornament" aria-hidden="true">✦</div>
+          <p class="intro" data-i18n="intro">Coffee classics, seasonal moods and homemade things from our tiny window at the Malá Strana end of Legion Bridge.</p>
+        </header>
+
+        <div class="menu-grid">
+          <div>
+            <section class="menu-group">
+              <div class="group-title-row"><h2 data-i18n="coffee.title">Coffee</h2></div>
+              <p class="group-subtitle" data-i18n="coffee.subtitle">the classics</p>
+
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="espresso.name">Espresso</span><span class="item-dots"></span></div>
+                <p data-i18n="espresso.desc">short + strong</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="double.name">Double espresso</span><span class="item-dots"></span></div>
+                <p data-i18n="double.desc">double shot</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="americano.name">Americano</span><span class="item-dots"></span></div>
+                <p data-i18n="americano.desc">espresso + hot water</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="cappuccino.name">Cappuccino</span><span class="item-dots"></span></div>
+                <p data-i18n="cappuccino.desc">coffee + silky milk</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="latte.name">Caffè latte</span><span class="item-dots"></span></div>
+                <p data-i18n="latte.desc">smooth + milky</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="flatwhite.name">Flat white</span><span class="item-dots"></span></div>
+                <p data-i18n="flatwhite.desc">stronger + smooth</p>
+              </article>
+            </section>
+
+            <section class="menu-group">
+              <div class="group-title-row"><h2 data-i18n="extras.title">Extras</h2></div>
+              <p class="group-subtitle" data-i18n="extras.subtitle">make it yours</p>
+
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="milk.name">Alternative milk</span><span class="item-dots"></span></div>
+                <p data-i18n="milk.desc">ask for today's options</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="shot.name">Extra espresso shot</span><span class="item-dots"></span></div>
+                <p data-i18n="shot.desc">one extra shot</p>
+              </article>
+            </section>
+          </div>
+
+          <div>
+            <section class="menu-group">
+              <div class="group-title-row"><h2 data-i18n="moods.title">More moods</h2></div>
+              <p class="group-subtitle" data-i18n="moods.subtitle">something different</p>
+
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="seasonal.name">Seasonal coffee</span><span class="item-dots"></span></div>
+                <p data-i18n="seasonal.desc">ask at the window</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="iced.name">Iced coffee</span><span class="item-dots"></span></div>
+                <p data-i18n="iced.desc">for sunny Prague days</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="chocolate.name">Hot chocolate</span><span class="item-dots"></span></div>
+                <p data-i18n="chocolate.desc">creamy</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="tea.name">Tea</span><span class="item-dots"></span></div>
+                <p data-i18n="tea.desc">simple + warm</p>
+              </article>
+            </section>
+
+            <section class="menu-group">
+              <div class="group-title-row"><h2 data-i18n="homemade.title">Homemade</h2></div>
+              <p class="group-subtitle" data-i18n="homemade.subtitle">sweet things</p>
+
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="cake.name">Today's homemade cake</span><span class="item-dots"></span></div>
+                <p data-i18n="cake.desc">changes with the day</p>
+              </article>
+              <article class="menu-item">
+                <div class="item-line"><span class="item-name" data-i18n="sweet.name">Sweet of the day</span><span class="item-dots"></span></div>
+                <p data-i18n="sweet.desc">ask at the window</p>
+              </article>
+            </section>
+          </div>
+        </div>
+
+        <div class="menu-note">
+          <strong data-i18n="note.title">Prices + daily specials at the window</strong>
+          <span data-i18n="note.text">The selection can change with the season and the day. Ask Claudia what is fresh today.</span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span data-i18n="footer.address">Vítězná 126/1 · Malá Strana · Prague</span>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/claudia.coffee/" target="_blank" rel="noreferrer">@claudia.coffee</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Claudia+Coffee+Vitezna+126%2F1+Prague" target="_blank" rel="noreferrer" data-i18n="footer.directions">Directions ↗</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        kicker: "Claudia Coffee · Prague",
+        menu: "MENU",
+        script: "coffee, colour & Prague",
+        intro: "Coffee classics, seasonal moods and homemade things from our tiny window at the Malá Strana end of Legion Bridge.",
+        "coffee.title": "Coffee", "coffee.subtitle": "the classics",
+        "espresso.name": "Espresso", "espresso.desc": "short + strong",
+        "double.name": "Double espresso", "double.desc": "double shot",
+        "americano.name": "Americano", "americano.desc": "espresso + hot water",
+        "cappuccino.name": "Cappuccino", "cappuccino.desc": "coffee + silky milk",
+        "latte.name": "Caffè latte", "latte.desc": "smooth + milky",
+        "flatwhite.name": "Flat white", "flatwhite.desc": "stronger + smooth",
+        "extras.title": "Extras", "extras.subtitle": "make it yours",
+        "milk.name": "Alternative milk", "milk.desc": "ask for today's options",
+        "shot.name": "Extra espresso shot", "shot.desc": "one extra shot",
+        "moods.title": "More moods", "moods.subtitle": "something different",
+        "seasonal.name": "Seasonal coffee", "seasonal.desc": "ask at the window",
+        "iced.name": "Iced coffee", "iced.desc": "for sunny Prague days",
+        "chocolate.name": "Hot chocolate", "chocolate.desc": "creamy",
+        "tea.name": "Tea", "tea.desc": "simple + warm",
+        "homemade.title": "Homemade", "homemade.subtitle": "sweet things",
+        "cake.name": "Today's homemade cake", "cake.desc": "changes with the day",
+        "sweet.name": "Sweet of the day", "sweet.desc": "ask at the window",
+        "note.title": "Prices + daily specials at the window",
+        "note.text": "The selection can change with the season and the day. Ask Claudia what is fresh today.",
+        "footer.address": "Vítězná 126/1 · Malá Strana · Prague",
+        "footer.directions": "Directions ↗"
+      },
+      cs: {
+        kicker: "Claudia Coffee · Praha",
+        menu: "NABÍDKA",
+        script: "káva, barvy & Praha",
+        intro: "Kávová klasika, sezónní chutě a domácí dobroty z našeho malého okénka na malostranské straně Mostu Legií.",
+        "coffee.title": "Káva", "coffee.subtitle": "klasika",
+        "espresso.name": "Espresso", "espresso.desc": "krátké + výrazné",
+        "double.name": "Dvojité espresso", "double.desc": "dvojitá dávka",
+        "americano.name": "Americano", "americano.desc": "espresso + horká voda",
+        "cappuccino.name": "Cappuccino", "cappuccino.desc": "káva + jemně našlehané mléko",
+        "latte.name": "Caffè latte", "latte.desc": "jemné + mléčné",
+        "flatwhite.name": "Flat white", "flatwhite.desc": "výraznější + jemné",
+        "extras.title": "Doplňky", "extras.subtitle": "podle vaší chuti",
+        "milk.name": "Rostlinné mléko", "milk.desc": "zeptejte se na dnešní nabídku",
+        "shot.name": "Extra espresso shot", "shot.desc": "jedna dávka navíc",
+        "moods.title": "Další chutě", "moods.subtitle": "něco jiného",
+        "seasonal.name": "Sezónní káva", "seasonal.desc": "zeptejte se u okénka",
+        "iced.name": "Ledová káva", "iced.desc": "pro slunečné pražské dny",
+        "chocolate.name": "Horká čokoláda", "chocolate.desc": "krémová",
+        "tea.name": "Čaj", "tea.desc": "jednoduchý + hřejivý",
+        "homemade.title": "Domácí", "homemade.subtitle": "něco sladkého",
+        "cake.name": "Dnešní domácí dort", "cake.desc": "mění se každý den",
+        "sweet.name": "Sladkost dne", "sweet.desc": "zeptejte se u okénka",
+        "note.title": "Ceny + denní nabídka u okénka",
+        "note.text": "Nabídka se může měnit podle sezóny a dne. Zeptejte se Claudie, co je dnes čerstvé.",
+        "footer.address": "Vítězná 126/1 · Malá Strana · Praha",
+        "footer.directions": "Navigovat ↗"
+      },
+      fr: {
+        kicker: "Claudia Coffee · Prague",
+        menu: "MENU",
+        script: "café, couleurs & Prague",
+        intro: "Les grands classiques du café, des envies de saison et des douceurs maison servis depuis notre petite fenêtre, côté Malá Strana du pont des Légions.",
+        "coffee.title": "Café", "coffee.subtitle": "les classiques",
+        "espresso.name": "Espresso", "espresso.desc": "court + intense",
+        "double.name": "Double espresso", "double.desc": "double dose",
+        "americano.name": "Americano", "americano.desc": "espresso + eau chaude",
+        "cappuccino.name": "Cappuccino", "cappuccino.desc": "café + lait velouté",
+        "latte.name": "Caffè latte", "latte.desc": "doux + lacté",
+        "flatwhite.name": "Flat white", "flatwhite.desc": "plus intense + velouté",
+        "extras.title": "Extras", "extras.subtitle": "à votre goût",
+        "milk.name": "Lait végétal", "milk.desc": "demandez les options du jour",
+        "shot.name": "Shot d'espresso supplémentaire", "shot.desc": "une dose en plus",
+        "moods.title": "D'autres envies", "moods.subtitle": "quelque chose de différent",
+        "seasonal.name": "Café de saison", "seasonal.desc": "demandez à la fenêtre",
+        "iced.name": "Café glacé", "iced.desc": "pour les journées ensoleillées à Prague",
+        "chocolate.name": "Chocolat chaud", "chocolate.desc": "crémeux",
+        "tea.name": "Thé", "tea.desc": "simple + réconfortant",
+        "homemade.title": "Fait maison", "homemade.subtitle": "les douceurs",
+        "cake.name": "Gâteau maison du jour", "cake.desc": "change au fil des jours",
+        "sweet.name": "Douceur du jour", "sweet.desc": "demandez à la fenêtre",
+        "note.title": "Prix + suggestions du jour à la fenêtre",
+        "note.text": "La sélection peut changer selon la saison et le jour. Demandez à Claudia ce qui est frais aujourd'hui.",
+        "footer.address": "Vítězná 126/1 · Malá Strana · Prague",
+        "footer.directions": "Itinéraire ↗"
+      }
+    };
+
+    const supported = ["en", "cs", "fr"];
+    const buttons = [...document.querySelectorAll("[data-lang]")];
+    const nodes = [...document.querySelectorAll("[data-i18n]")];
+
+    function applyLanguage(lang) {
+      const chosen = supported.includes(lang) ? lang : "en";
+      const dict = translations[chosen];
+
+      document.documentElement.lang = chosen === "cs" ? "cs" : chosen;
+      document.title = chosen === "cs" ? "Claudia Coffee | Nabídka" : "Claudia Coffee | Menu";
+
+      nodes.forEach((node) => {
+        const key = node.dataset.i18n;
+        if (dict[key]) node.textContent = dict[key];
+      });
+
+      buttons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.lang === chosen));
+      });
+
+      try { localStorage.setItem("claudia-menu-language", chosen); } catch (_) {}
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.lang));
+    });
+
+    let initial = "en";
+    try {
+      const saved = localStorage.getItem("claudia-menu-language");
+      if (supported.includes(saved)) initial = saved;
+      else {
+        const browser = (navigator.language || "en").toLowerCase();
+        if (browser.startsWith("cs")) initial = "cs";
+        if (browser.startsWith("fr")) initial = "fr";
+      }
+    } catch (_) {}
+
+    applyLanguage(initial);
+
+    const logo = document.getElementById("brand-logo");
+    const fallback = document.getElementById("brand-fallback");
+    logo.addEventListener("error", () => {
+      logo.style.display = "none";
+      fallback.style.display = "grid";
+    });
+  </script>
+</body>
+</html>
