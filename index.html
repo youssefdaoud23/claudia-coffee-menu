@@ -16,503 +16,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --coffee: #2a1813;
-      --coffee-2: #3b2119;
-      --cream: #f6ecd8;
-      --paper: #fffaf2;
-      --paper-2: #f4ecdf;
-      --ink: #2b1b16;
-      --muted: #745f55;
-      --pink: #efc8d4;
-      --copper: #b8734c;
-      --line: rgba(60, 33, 24, .15);
-      --shadow: 0 24px 70px rgba(48, 25, 17, .12);
+      --coffee:#2a1813; --cream:#f6ecd8; --paper:#fffaf2; --paper-2:#f4ecdf;
+      --ink:#2b1b16; --muted:#745f55; --pink:#efc8d4; --copper:#b8734c;
+      --line:rgba(60,33,24,.15); --shadow:0 24px 70px rgba(48,25,17,.12);
     }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      min-width: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 8% 4%, rgba(239, 200, 212, .55), transparent 28rem),
-        radial-gradient(circle at 92% 35%, rgba(184, 115, 76, .12), transparent 26rem),
-        #eee1cf;
-      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    a { color: inherit; }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button { font: inherit; }
-
-    .shell {
-      width: min(1180px, calc(100% - 28px));
-      margin: 0 auto;
-      padding-top: calc(16px + env(safe-area-inset-top, 0px));
-      padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
-    }
-
-    .topbar {
-      position: sticky;
-      top: 10px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 16px;
-      padding: 10px 12px;
-      border: 1px solid rgba(42, 24, 19, .13);
-      border-radius: 22px;
-      background: rgba(255, 250, 242, .9);
-      box-shadow: 0 12px 36px rgba(42, 24, 19, .09);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 0;
-      text-decoration: none;
-    }
-
-    .brand-logo {
-      width: 50px;
-      height: 50px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: var(--cream);
-      border: 1px solid rgba(42, 24, 19, .16);
-    }
-
-    .brand-fallback {
-      display: none;
-      place-items: center;
-      width: 50px;
-      height: 50px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: var(--coffee);
-      color: var(--cream);
-      font: 700 14px/1 "Playfair Display", serif;
-    }
-
-    .brand-name {
-      display: block;
-      font: 700 1.05rem/1.1 "Playfair Display", serif;
-      white-space: nowrap;
-    }
-
-    .brand-place {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: .68rem;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .languages {
-      display: inline-flex;
-      gap: 3px;
-      padding: 4px;
-      border-radius: 999px;
-      background: var(--paper-2);
-      border: 1px solid var(--line);
-    }
-
-    .lang-btn {
-      min-width: 42px;
-      min-height: 42px;
-      padding: 0 10px;
-      border: 0;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      cursor: pointer;
-    }
-
-    .lang-btn[aria-pressed="true"] { background: var(--coffee); color: var(--cream); }
-    .lang-btn:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--copper); outline-offset: 3px; }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
-      gap: clamp(28px, 5vw, 72px);
-      align-items: stretch;
-      padding: clamp(42px, 7vw, 82px) clamp(24px, 6vw, 72px);
-      border-radius: 34px;
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--line);
-    }
-
-    .eyebrow {
-      margin: 0 0 10px;
-      color: #98563c;
-      font-size: .7rem;
-      font-weight: 800;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      margin: 0;
-      color: var(--coffee);
-      font: 700 clamp(4.2rem, 10vw, 8.5rem)/.84 "Playfair Display", serif;
-      letter-spacing: -.055em;
-    }
-
-    .hero h1 em { font-weight: 600; }
-
-    .hero-lead {
-      max-width: 680px;
-      margin: 24px 0 0;
-      color: var(--muted);
-      font: 500 clamp(1rem, 2vw, 1.2rem)/1.65 "DM Sans", sans-serif;
-    }
-
-    .hero-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 26px;
-    }
-
-    .hero-pills span {
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fffdf8;
-      font-size: .7rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .overview {
-      align-self: stretch;
-      padding: 28px;
-      border-radius: 28px;
-      background: var(--coffee);
-      color: var(--cream);
-    }
-
-    .overview-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 22px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(246, 236, 216, .16);
-    }
-
-    .overview-top span {
-      color: rgba(246, 236, 216, .62);
-      font-size: .7rem;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .overview-top strong { font: 700 1.2rem/1 "Playfair Display", serif; }
-    .overview-list { display: grid; gap: 8px; }
-    .overview-list a {
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: 10px;
-      align-items: center;
-      padding: 9px 0;
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(246, 236, 216, .18);
-      font-size: .9rem;
-      font-weight: 700;
-    }
-    .overview-list b { color: #efc8d4; font-size: .72rem; }
-    .overview-note { margin: 20px 0 0; color: #efc8d4; font: 700 1.2rem/1.1 "Caveat", cursive; }
-
-    .jump-nav {
-      position: sticky;
-      top: 88px;
-      z-index: 40;
-      display: flex;
-      gap: 7px;
-      overflow-x: auto;
-      margin: 16px 0 0;
-      padding: 10px;
-      border-radius: 18px;
-      background: rgba(255, 250, 242, .92);
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 28px rgba(42, 24, 19, .08);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      scrollbar-width: none;
-    }
-
-    .jump-nav::-webkit-scrollbar { display: none; }
-    .jump-nav a {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 10px 13px;
-      border-radius: 999px;
-      background: var(--paper-2);
-      text-decoration: none;
-      color: var(--coffee);
-      font-size: .74rem;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-    .jump-nav a span { color: #98563c; font-size: .66rem; }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .category {
-      scroll-margin-top: 154px;
-      padding: clamp(26px, 4vw, 42px);
-      border-radius: 28px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      box-shadow: 0 14px 42px rgba(42, 24, 19, .05);
-    }
-
-    .category.wide { grid-column: 1 / -1; }
-    .category.seasonal { background: var(--coffee); color: var(--cream); }
-
-    .category-head {
-      display: flex;
-      gap: 15px;
-      align-items: flex-start;
-      margin-bottom: 22px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--line);
-    }
-    .seasonal .category-head { border-color: rgba(246, 236, 216, .16); }
-
-    .category-number {
-      display: grid;
-      place-items: center;
-      width: 40px;
-      height: 40px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: var(--pink);
-      color: var(--coffee);
-      font-size: .7rem;
-      font-weight: 900;
-    }
-
-    .category h2 {
-      margin: 1px 0 0;
-      font: 700 clamp(1.9rem, 4vw, 3.25rem)/.98 "Playfair Display", serif;
-      letter-spacing: -.035em;
-    }
-
-    .subsection + .subsection { margin-top: 28px; }
-    .subsection h3 {
-      margin: 0 0 10px;
-      color: #7d4735;
-      font: 700 1.25rem/1.15 "Playfair Display", serif;
-    }
-    .seasonal .subsection h3 { color: var(--pink); }
-
-    .section-intro {
-      margin: -4px 0 22px;
-      color: var(--muted);
-      font-size: .95rem;
-      line-height: 1.55;
-    }
-    .seasonal .section-intro { color: rgba(246, 236, 216, .68); }
-
-    .drink-list { display: grid; }
-    .drink-list.two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 34px; }
-
-    .drink-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 14px;
-      align-items: start;
-      padding: 12px 0;
-      border-bottom: 1px dotted rgba(60, 33, 24, .22);
-      font-size: .93rem;
-      line-height: 1.35;
-    }
-    .seasonal .drink-row { border-color: rgba(246, 236, 216, .2); }
-    .drink-row span { min-width: 0; font-weight: 650; }
-    .drink-row strong { white-space: nowrap; color: var(--coffee); font-size: .88rem; }
-    .seasonal .drink-row strong { color: var(--cream); }
-
-    .drink-row small {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: .72rem;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-    .seasonal .drink-row small { color: rgba(246, 236, 216, .62); }
-
-    .tbc {
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: var(--pink);
-      color: var(--coffee) !important;
-      font-size: .66rem !important;
-      letter-spacing: .08em;
-    }
-
-    .extras {
-      margin-top: 28px;
-      padding: 20px;
-      border-radius: 20px;
-      background: var(--paper-2);
-      border: 1px solid rgba(60, 33, 24, .09);
-    }
-    .extras-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      align-items: baseline;
-      margin-bottom: 8px;
-    }
-    .extras-head strong { font: 700 1.1rem/1.1 "Playfair Display", serif; }
-    .extras-head span { color: var(--muted); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-
-    .season-label {
-      display: inline-flex;
-      margin-bottom: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--pink);
-      color: var(--coffee);
-      font-size: .66rem;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .footer-card {
-      display: flex;
-      justify-content: space-between;
-      gap: 26px;
-      align-items: center;
-      margin-top: 18px;
-      padding: clamp(24px, 4vw, 42px);
-      border-radius: 28px;
-      background: var(--pink);
-      border: 1px solid rgba(42, 24, 19, .09);
-    }
-    .footer-card h2 { margin: 2px 0 6px; font: 700 clamp(2rem, 5vw, 3.6rem)/.95 "Playfair Display", serif; }
-    .footer-card p { margin: 0; color: rgba(42, 24, 19, .67); }
-    .footer-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      padding: 0 15px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: .78rem;
-      font-weight: 800;
-    }
-    .button-dark { background: var(--coffee); color: var(--cream); }
-    .button-light { background: rgba(255, 250, 242, .62); border: 1px solid rgba(42, 24, 19, .14); }
-
-    .site-footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      padding: 24px 4px 0;
-      color: var(--muted);
-      font-size: .78rem;
-    }
-    .site-footer-links { display: flex; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
-    .site-footer a { text-underline-offset: 3px; }
-
-    .back-to-top {
-      position: fixed;
-      right: max(18px, env(safe-area-inset-right, 0px));
-      bottom: max(18px, env(safe-area-inset-bottom, 0px));
-      z-index: 80;
-      display: grid;
-      place-items: center;
-      width: 58px;
-      height: 58px;
-      padding: 0;
-      border: 0;
-      border-radius: 50%;
-      background: var(--coffee);
-      color: var(--cream);
-      box-shadow: 0 15px 36px rgba(42, 24, 19, .28);
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(10px);
-      transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
-    }
-    .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-    .back-to-top span { display: block; font-size: 1.15rem; line-height: 1; }
-    .back-to-top small { display: block; margin-top: -3px; font-size: .56rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
-
-    @media (hover: hover) and (pointer: fine) {
-      .jump-nav a:hover, .overview-list a:hover { opacity: .72; }
-      .button:hover, .back-to-top:hover { transform: translateY(-2px); }
-    }
-
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; }
-      .overview { max-width: none; }
-      .menu-grid { grid-template-columns: 1fr; }
-      .category.wide { grid-column: 1; }
-      .drink-list.two-col { grid-template-columns: 1fr; }
-      .footer-card { align-items: flex-start; flex-direction: column; }
-      .footer-actions { justify-content: flex-start; }
-    }
-
-    @media (max-width: 620px) {
-      .shell { width: min(100% - 16px, 620px); padding-top: calc(8px + env(safe-area-inset-top, 0px)); }
-      .topbar { top: 6px; padding: 8px; border-radius: 18px; }
-      .brand-logo, .brand-fallback { width: 44px; height: 44px; }
-      .brand-place { display: none; }
-      .lang-btn { min-width: 38px; min-height: 38px; padding: 0 8px; }
-      .hero { padding: 32px 20px; border-radius: 24px; }
-      .hero h1 { font-size: clamp(3.7rem, 19vw, 6.4rem); }
-      .overview { padding: 22px; border-radius: 22px; }
-      .jump-nav { top: 76px; }
-      .category { padding: 24px 18px; border-radius: 22px; }
-      .category-head { gap: 12px; }
-      .category-number { width: 36px; height: 36px; }
-      .category h2 { font-size: 2rem; }
-      .drink-row { gap: 10px; font-size: .88rem; }
-      .drink-row strong { font-size: .82rem; }
-      .extras { padding: 16px 14px; }
-      .footer-card { padding: 24px 20px; border-radius: 22px; }
-      .site-footer { align-items: flex-start; flex-direction: column; }
-      .site-footer-links { justify-content: flex-start; }
-      .back-to-top { width: 54px; height: 54px; right: 14px; bottom: 14px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
-    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+    body{margin:0;min-width:0;min-height:100vh;color:var(--ink);background:radial-gradient(circle at 8% 4%,rgba(239,200,212,.55),transparent 28rem),radial-gradient(circle at 92% 35%,rgba(184,115,76,.12),transparent 26rem),#eee1cf;font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit} button,a{-webkit-tap-highlight-color:transparent} button{font:inherit}
+    .shell{width:min(1180px,calc(100% - 28px));margin:0 auto;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+    .topbar{position:sticky;top:10px;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px;padding:10px 12px;border:1px solid rgba(42,24,19,.13);border-radius:22px;background:rgba(255,250,242,.92);box-shadow:0 12px 36px rgba(42,24,19,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+    .brand{display:flex;align-items:center;gap:11px;min-width:0;text-decoration:none}.brand-logo{width:50px;height:50px;flex:0 0 auto;border-radius:50%;background:var(--cream);border:1px solid rgba(42,24,19,.16)}.brand-fallback{display:none;place-items:center;width:50px;height:50px;flex:0 0 auto;border-radius:50%;background:var(--coffee);color:var(--cream);font:700 14px/1 "Playfair Display",serif}.brand-name{display:block;font:700 1.05rem/1.1 "Playfair Display",serif;white-space:nowrap}.brand-place{display:block;margin-top:3px;color:var(--muted);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+    .languages{display:inline-flex;gap:3px;padding:4px;border-radius:999px;background:var(--paper-2);border:1px solid var(--line)}.lang-btn{min-width:42px;min-height:42px;padding:0 10px;border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:.72rem;font-weight:800;letter-spacing:.06em;cursor:pointer}.lang-btn[aria-pressed="true"]{background:var(--coffee);color:var(--cream)}.lang-btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--copper);outline-offset:3px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:clamp(28px,5vw,72px);align-items:stretch;padding:clamp(42px,7vw,82px) clamp(24px,6vw,72px);border-radius:34px;background:var(--paper);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .eyebrow{margin:0 0 10px;color:#98563c;font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{margin:0;color:var(--coffee);font:700 clamp(4.2rem,10vw,8.5rem)/.84 "Playfair Display",serif;letter-spacing:-.055em}.hero h1 em{font-weight:600}.hero-lead{max-width:680px;margin:24px 0 0;color:var(--muted);font:500 clamp(1rem,2vw,1.2rem)/1.65 "DM Sans",sans-serif}.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}.hero-pills span{padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:#fffdf8;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+    .overview{align-self:stretch;padding:28px;border-radius:28px;background:var(--coffee);color:var(--cream)}.overview-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid rgba(246,236,216,.16)}.overview-top span{color:rgba(246,236,216,.62);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.overview-top strong{font:700 1.2rem/1 "Playfair Display",serif}.overview-list{display:grid;gap:8px}.overview-list a{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center;padding:9px 0;color:inherit;text-decoration:none;border-bottom:1px dotted rgba(246,236,216,.18);font-size:.9rem;font-weight:700}.overview-list b{color:#efc8d4;font-size:.72rem}.overview-note{margin:20px 0 0;color:#efc8d4;font:700 1.2rem/1.1 "Caveat",cursive}
+    .jump-nav{position:sticky;top:88px;z-index:40;display:flex;gap:7px;overflow-x:auto;margin:16px 0 0;padding:10px;border-radius:18px;background:rgba(255,250,242,.94);border:1px solid var(--line);box-shadow:0 10px 28px rgba(42,24,19,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);scrollbar-width:none}.jump-nav::-webkit-scrollbar{display:none}.jump-nav a{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:10px 13px;border-radius:999px;background:var(--paper-2);text-decoration:none;color:var(--coffee);font-size:.74rem;font-weight:800;white-space:nowrap}.jump-nav a span{color:#98563c;font-size:.66rem}
+    .category-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;margin-top:18px}
+    .category{scroll-margin-top:154px;width:100%;padding:clamp(26px,4vw,42px);border-radius:28px;background:var(--paper);border:1px solid var(--line);box-shadow:0 14px 42px rgba(42,24,19,.05)}.category.seasonal{background:var(--coffee);color:var(--cream)}
+    .category-head{display:flex;gap:15px;align-items:flex-start;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line)}.seasonal .category-head{border-color:rgba(246,236,216,.16)}.category-number{display:grid;place-items:center;width:40px;height:40px;flex:0 0 auto;border-radius:50%;background:var(--pink);color:var(--coffee);font-size:.7rem;font-weight:900}.category h2{margin:1px 0 0;font:700 clamp(1.9rem,4vw,3.25rem)/.98 "Playfair Display",serif;letter-spacing:-.035em}
+    .coffee-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.coffee-grid .subsection{padding:20px;border:1px solid rgba(60,33,24,.1);border-radius:20px;background:rgba(255,255,255,.5)}.subsection+.subsection{margin-top:28px}.coffee-grid .subsection+.subsection{margin-top:0}.subsection h3{margin:0 0 10px;color:#7d4735;font:700 1.25rem/1.15 "Playfair Display",serif}.seasonal .subsection h3{color:var(--pink)}.section-intro{margin:-4px 0 22px;color:var(--muted);font-size:.95rem;line-height:1.55}.seasonal .section-intro{color:rgba(246,236,216,.68)}
+    .drink-list{display:grid}.drink-list.two-col{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px}.drink-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start;padding:12px 0;border-bottom:1px dotted rgba(60,33,24,.22);font-size:.93rem;line-height:1.35}.drink-row:last-child{border-bottom:0}.seasonal .drink-row{border-color:rgba(246,236,216,.2)}.drink-row span{min-width:0;font-weight:650}.drink-row strong{white-space:nowrap;color:#98563c;font-size:.88rem}.seasonal .drink-row strong{color:var(--cream)}.drink-row small{display:block;margin-top:4px;color:var(--muted);font-size:.72rem;font-weight:600;line-height:1.35}.seasonal .drink-row small{color:rgba(246,236,216,.62)}.tbc{padding:5px 8px;border-radius:999px;background:var(--pink);color:var(--coffee)!important;font-size:.66rem!important;letter-spacing:.08em}
+    .extras{margin-top:22px;padding:20px;border-radius:20px;background:var(--paper-2);border:1px solid rgba(60,33,24,.09)}.extras-head{display:flex;justify-content:space-between;gap:14px;align-items:baseline;margin-bottom:8px}.extras-head strong{font:700 1.1rem/1.1 "Playfair Display",serif}.extras-head span{color:var(--muted);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.season-label{display:inline-flex;margin-bottom:8px;padding:7px 10px;border-radius:999px;background:var(--pink);color:var(--coffee);font-size:.66rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .footer-card{display:flex;justify-content:space-between;gap:26px;align-items:center;margin-top:18px;padding:clamp(24px,4vw,42px);border-radius:28px;background:var(--pink);border:1px solid rgba(42,24,19,.09)}.footer-card h2{margin:2px 0 6px;font:700 clamp(2rem,5vw,3.6rem)/.95 "Playfair Display",serif}.footer-card p{margin:0;color:rgba(42,24,19,.67)}.footer-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}.button{display:inline-flex;align-items:center;min-height:44px;padding:0 15px;border-radius:999px;text-decoration:none;font-size:.78rem;font-weight:800}.button-dark{background:var(--coffee);color:var(--cream)}.button-light{background:rgba(255,250,242,.62);border:1px solid rgba(42,24,19,.14)}
+    .site-footer{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:24px 4px 0;color:var(--muted);font-size:.78rem}.site-footer-links{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}.site-footer a{text-underline-offset:3px}
+    .back-to-top{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:80;display:grid;place-items:center;width:58px;height:58px;padding:0;border:0;border-radius:50%;background:var(--coffee);color:var(--cream);box-shadow:0 15px 36px rgba(42,24,19,.28);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}.back-to-top.show{opacity:1;visibility:visible;transform:translateY(0)}.back-to-top span{display:block;font-size:1.15rem;line-height:1}.back-to-top small{display:block;margin-top:-3px;font-size:.56rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+    @media (hover:hover) and (pointer:fine){.jump-nav a:hover,.overview-list a:hover{opacity:.72}.button:hover,.back-to-top:hover{transform:translateY(-2px)}}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.coffee-grid{grid-template-columns:1fr}.drink-list.two-col{grid-template-columns:1fr}.footer-card{align-items:flex-start;flex-direction:column}.footer-actions{justify-content:flex-start}}
+    @media (max-width:620px){.shell{width:min(100% - 16px,620px);padding-top:calc(8px + env(safe-area-inset-top,0px))}.topbar{top:6px;padding:8px;border-radius:18px}.brand-logo,.brand-fallback{width:44px;height:44px}.brand-place{display:none}.lang-btn{min-width:38px;min-height:38px;padding:0 8px}.hero{padding:32px 20px;border-radius:24px}.hero h1{font-size:clamp(3.7rem,19vw,6.4rem)}.overview{padding:22px;border-radius:22px}.jump-nav{top:76px}.category{padding:24px 18px;border-radius:22px}.category-head{gap:12px}.category-number{width:36px;height:36px}.category h2{font-size:2rem}.drink-row{gap:10px;font-size:.88rem}.drink-row strong{font-size:.82rem}.extras{padding:16px 14px}.footer-card{padding:24px 20px;border-radius:22px}.site-footer{align-items:flex-start;flex-direction:column}.site-footer-links{justify-content:flex-start}.back-to-top{width:54px;height:54px;right:14px;bottom:14px}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}}
   </style>
 </head>
 <body id="top">
@@ -521,10 +53,7 @@
       <a class="brand" href="https://claudiacoffee.vercel.app/" aria-label="Claudia Coffee home">
         <img class="brand-logo" id="brand-logo" src="https://claudiacoffee.vercel.app/assets/logo.svg" alt="Claudia Coffee logo" width="50" height="50">
         <span class="brand-fallback" id="brand-fallback" aria-hidden="true">CC</span>
-        <span>
-          <span class="brand-name">Claudia Coffee</span>
-          <span class="brand-place">Prague · Most Legií</span>
-        </span>
+        <span><span class="brand-name">Claudia Coffee</span><span class="brand-place">Prague · Most Legií</span></span>
       </a>
       <div class="languages" aria-label="Language">
         <button class="lang-btn" type="button" data-lang="en" aria-pressed="true">EN</button>
@@ -539,360 +68,97 @@
           <p class="eyebrow">CLAUDIA COFFEE · PRAGUE</p>
           <h1>DRINKS <em>MENU</em></h1>
           <p class="hero-lead" data-i18n="lead">Coffee classics, colourful specialties, homemade seasonal drinks and something stronger for later in the day.</p>
-          <div class="hero-pills">
-            <span data-i18n="prices">Prices in CZK</span>
-            <span data-i18n="order">Order at the window</span>
-            <span>Malá Strana · Most Legií</span>
-          </div>
+          <div class="hero-pills"><span data-i18n="prices">Prices in CZK</span><span data-i18n="order">Order at the window</span><span>Malá Strana · Most Legií</span></div>
         </div>
         <aside class="overview" aria-label="Menu overview">
           <div class="overview-top"><span data-i18n="overviewLabel">7 sections</span><strong data-i18n="overviewTitle">One menu</strong></div>
           <div class="overview-list">
-            <a href="#coffee"><b>01</b> Coffee</a>
-            <a href="#matcha"><b>02</b> Matcha, Chai & Specialty Drinks</a>
-            <a href="#chocolate"><b>03</b> Hot Chocolate</a>
-            <a href="#seasonal"><b>04</b> Seasonal Homemade Drinks</a>
-            <a href="#cocktails"><b>05</b> Cocktails</a>
-            <a href="#soft-drinks"><b>06</b> Bottled Soft Drinks</a>
-            <a href="#beer-wine-spirits"><b>07</b> Beer, Wine & Spirits</a>
+            <a href="#coffee"><b>01</b> Coffee</a><a href="#matcha"><b>02</b> Matcha, Chai & Specialty Drinks</a><a href="#chocolate"><b>03</b> Hot Chocolate</a><a href="#seasonal"><b>04</b> Seasonal Homemade Drinks</a><a href="#cocktails"><b>05</b> Cocktails</a><a href="#soft-drinks"><b>06</b> Bottled Soft Drinks</a><a href="#beer-wine-spirits"><b>07</b> Beer, Wine & Spirits</a>
           </div>
           <p class="overview-note" data-i18n="seasonNow">Autumn & Winter menu available now</p>
         </aside>
       </section>
 
       <nav class="jump-nav" aria-label="Drinks menu categories">
-        <a href="#coffee"><span>01</span>Coffee</a>
-        <a href="#matcha"><span>02</span>Matcha & Chai</a>
-        <a href="#chocolate"><span>03</span>Hot Chocolate</a>
-        <a href="#seasonal"><span>04</span>Seasonal</a>
-        <a href="#cocktails"><span>05</span>Cocktails</a>
-        <a href="#soft-drinks"><span>06</span>Soft Drinks</a>
-        <a href="#beer-wine-spirits"><span>07</span>Beer, Wine & Spirits</a>
+        <a href="#coffee"><span>01</span>Coffee</a><a href="#matcha"><span>02</span>Matcha & Chai</a><a href="#chocolate"><span>03</span>Hot Chocolate</a><a href="#seasonal"><span>04</span>Seasonal</a><a href="#cocktails"><span>05</span>Cocktails</a><a href="#soft-drinks"><span>06</span>Soft Drinks</a><a href="#beer-wine-spirits"><span>07</span>Beer, Wine & Spirits</a>
       </nav>
 
-      <div class="menu-grid">
-        <section class="category wide" id="coffee">
+      <div class="category-stack">
+        <section class="category" id="coffee">
           <div class="category-head"><span class="category-number">01</span><div><p class="eyebrow" data-i18n="coffeeEyebrow">THE ESSENTIALS</p><h2>COFFEE</h2></div></div>
-          <div class="menu-grid" style="margin-top:0">
-            <div class="subsection">
-              <h3>Coffee Classics</h3>
-              <div class="drink-list">
-                <div class="drink-row"><span>Espresso</span><strong>70 CZK</strong></div>
-                <div class="drink-row"><span>Double Espresso</span><strong>85 CZK</strong></div>
-                <div class="drink-row"><span>Americano</span><strong>80 CZK</strong></div>
-                <div class="drink-row"><span>Cappuccino</span><strong>90 CZK</strong></div>
-                <div class="drink-row"><span>Flat White</span><strong>98 CZK</strong></div>
-                <div class="drink-row"><span>Caffè Latte</span><strong>95 CZK</strong></div>
-              </div>
-            </div>
-            <div class="subsection">
-              <h3>Signature Coffee</h3>
-              <div class="drink-list">
-                <div class="drink-row"><span>Pumpkin Spice Latte</span><strong>115 CZK</strong></div>
-                <div class="drink-row"><span>Biscoff Latte</span><strong>115 CZK</strong></div>
-                <div class="drink-row"><span>Peanut Butter Latte</span><strong>115 CZK</strong></div>
-                <div class="drink-row"><span>Baileys Coffee <small data-i18n="containsAlcohol">contains alcohol</small></span><strong>145 CZK</strong></div>
-                <div class="drink-row"><span>Amaretto Coffee <small data-i18n="containsAlcohol">contains alcohol</small></span><strong>145 CZK</strong></div>
-                <div class="drink-row"><span>Ube Coffee</span><strong>145 CZK</strong></div>
-              </div>
-            </div>
+          <div class="coffee-grid">
+            <div class="subsection"><h3>Coffee Classics</h3><div class="drink-list">
+              <div class="drink-row"><span>Espresso</span><strong>70 CZK</strong></div><div class="drink-row"><span>Double Espresso</span><strong>85 CZK</strong></div><div class="drink-row"><span>Americano</span><strong>80 CZK</strong></div><div class="drink-row"><span>Cappuccino</span><strong>90 CZK</strong></div><div class="drink-row"><span>Flat White</span><strong>98 CZK</strong></div><div class="drink-row"><span>Caffè Latte</span><strong>95 CZK</strong></div>
+            </div></div>
+            <div class="subsection"><h3>Signature Coffee</h3><div class="drink-list">
+              <div class="drink-row"><span>Pumpkin Spice Latte</span><strong>115 CZK</strong></div><div class="drink-row"><span>Biscoff Latte</span><strong>115 CZK</strong></div><div class="drink-row"><span>Peanut Butter Latte</span><strong>115 CZK</strong></div><div class="drink-row"><span>Baileys Coffee <small data-i18n="containsAlcohol">contains alcohol</small></span><strong>145 CZK</strong></div><div class="drink-row"><span>Amaretto Coffee <small data-i18n="containsAlcohol">contains alcohol</small></span><strong>145 CZK</strong></div><div class="drink-row"><span>Ube Coffee</span><strong>145 CZK</strong></div>
+            </div></div>
+            <div class="subsection"><h3>Cold Coffee</h3><div class="drink-list">
+              <div class="drink-row"><span>Iced Latte</span><strong class="tbc" data-i18n="tbc">TBC</strong></div><div class="drink-row"><span>Espresso Tonic</span><strong class="tbc" data-i18n="tbc">TBC</strong></div><div class="drink-row"><span>Affogato</span><strong class="tbc" data-i18n="tbc">TBC</strong></div>
+            </div></div>
           </div>
-          <div class="subsection" style="margin-top:28px">
-            <h3>Cold Coffee</h3>
-            <div class="drink-list">
-              <div class="drink-row"><span>Iced Latte</span><strong class="tbc" data-i18n="tbc">TBC</strong></div>
-              <div class="drink-row"><span>Espresso Tonic</span><strong class="tbc" data-i18n="tbc">TBC</strong></div>
-              <div class="drink-row"><span>Affogato</span><strong class="tbc" data-i18n="tbc">TBC</strong></div>
-            </div>
-          </div>
-          <div class="extras">
-            <div class="extras-head"><strong data-i18n="makeItYours">Make it yours</strong><span data-i18n="coffeeExtras">Coffee extras</span></div>
-            <div class="drink-list">
-              <div class="drink-row"><span>Flavoured Syrup <small>Vanilla / Caramel / Chocolate / Pumpkin Spice</small></span><strong>+15 CZK</strong></div>
-              <div class="drink-row"><span>Extra Espresso Shot</span><strong>+40 CZK</strong></div>
-              <div class="drink-row"><span>Alternative Milk</span><strong>+20 CZK</strong></div>
-              <div class="drink-row"><span>Extra Milk</span><strong>+8 CZK</strong></div>
-              <div class="drink-row"><span>Whipped Cream</span><strong>+28 CZK</strong></div>
-            </div>
-          </div>
+          <div class="extras"><div class="extras-head"><strong data-i18n="makeItYours">Make it yours</strong><span data-i18n="coffeeExtras">Coffee extras</span></div><div class="drink-list two-col">
+            <div class="drink-row"><span>Flavoured Syrup <small>Vanilla / Caramel / Chocolate / Pumpkin Spice</small></span><strong>+15 CZK</strong></div><div class="drink-row"><span>Extra Espresso Shot</span><strong>+40 CZK</strong></div><div class="drink-row"><span>Alternative Milk</span><strong>+20 CZK</strong></div><div class="drink-row"><span>Extra Milk</span><strong>+8 CZK</strong></div><div class="drink-row"><span>Whipped Cream</span><strong>+28 CZK</strong></div>
+          </div></div>
         </section>
 
         <section class="category" id="matcha">
           <div class="category-head"><span class="category-number">02</span><div><p class="eyebrow" data-i18n="colourCup">COLOUR IN A CUP</p><h2>MATCHA, CHAI & SPECIALTY DRINKS</h2></div></div>
-          <div class="drink-list">
-            <div class="drink-row"><span>Tiger Spice Chai Latte</span><strong>95 CZK</strong></div>
-            <div class="drink-row"><span>Black Sense Chai Latte</span><strong>110 CZK</strong></div>
-            <div class="drink-row"><span>Dirty Chai Latte</span><strong>120 CZK</strong></div>
-            <div class="drink-row"><span>Matcha Latte</span><strong>145 CZK</strong></div>
-            <div class="drink-row"><span>Mango Matcha</span><strong>155 CZK</strong></div>
-            <div class="drink-row"><span>Strawberry Matcha</span><strong>155 CZK</strong></div>
-            <div class="drink-row"><span>Butterfly Pea Latte / Blue Latte</span><strong>120 CZK</strong></div>
-            <div class="drink-row"><span>Pink Superfood Latte</span><strong>120 CZK</strong></div>
-            <div class="drink-row"><span>Ube Latte</span><strong>140 CZK</strong></div>
-            <div class="drink-row"><span>Mint Tea</span><strong>95 CZK</strong></div>
+          <div class="drink-list two-col">
+            <div class="drink-row"><span>Tiger Spice Chai Latte</span><strong>95 CZK</strong></div><div class="drink-row"><span>Black Sense Chai Latte</span><strong>110 CZK</strong></div><div class="drink-row"><span>Dirty Chai Latte</span><strong>120 CZK</strong></div><div class="drink-row"><span>Matcha Latte</span><strong>145 CZK</strong></div><div class="drink-row"><span>Mango Matcha</span><strong>155 CZK</strong></div><div class="drink-row"><span>Strawberry Matcha</span><strong>155 CZK</strong></div><div class="drink-row"><span>Butterfly Pea Latte / Blue Latte</span><strong>120 CZK</strong></div><div class="drink-row"><span>Pink Superfood Latte</span><strong>120 CZK</strong></div><div class="drink-row"><span>Ube Latte</span><strong>140 CZK</strong></div><div class="drink-row"><span>Mint Tea</span><strong>95 CZK</strong></div>
           </div>
         </section>
 
         <section class="category" id="chocolate">
           <div class="category-head"><span class="category-number">03</span><div><p class="eyebrow" data-i18n="richWarm">RICH & WARM</p><h2>HOT CHOCOLATE</h2></div></div>
-          <div class="drink-list">
-            <div class="drink-row"><span>Scottish Sea Salt Chocolate</span><strong>110 CZK</strong></div>
-            <div class="drink-row"><span>Italian Hot Chocolate <small data-i18n="thickCreamy">Extra thick and creamy.</small></span><strong>120 CZK</strong></div>
-            <div class="drink-row"><span>Whipped Cream</span><strong>+28 CZK</strong></div>
-          </div>
+          <div class="drink-list"><div class="drink-row"><span>Scottish Sea Salt Chocolate</span><strong>110 CZK</strong></div><div class="drink-row"><span>Italian Hot Chocolate <small data-i18n="thickCreamy">Extra thick and creamy.</small></span><strong>120 CZK</strong></div><div class="drink-row"><span>Whipped Cream</span><strong>+28 CZK</strong></div></div>
         </section>
 
         <section class="category seasonal" id="seasonal">
           <div class="category-head"><span class="category-number">04</span><div><p class="eyebrow" data-i18n="madeHouse">MADE IN HOUSE</p><h2>SEASONAL HOMEMADE DRINKS</h2></div></div>
-          <p class="section-intro" data-i18n="seasonalIntro">Our homemade drinks change with the seasons. Available hot or iced.</p>
-          <span class="season-label" data-i18n="availableNow">Available Now</span>
-          <div class="subsection">
-            <h3>Autumn & Winter</h3>
-            <div class="drink-list">
-              <div class="drink-row"><span>Pear & Cinnamon</span><strong>125 CZK</strong></div>
-              <div class="drink-row"><span>Blackcurrant</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Apricot & Cinnamon</span><strong>125 CZK</strong></div>
-              <div class="drink-row"><span>Mango & Apricot</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Ginger</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Lemon</span><strong>135 CZK</strong></div>
-            </div>
-          </div>
-          <div class="subsection" id="spring-summer" hidden>
-            <h3>Spring & Summer</h3>
-            <div class="drink-list">
-              <div class="drink-row"><span>Strawberry & Mint</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Raspberry & Basil</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Apricot & Basil</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Mango & Passion Fruit</span><strong>135 CZK</strong></div>
-              <div class="drink-row"><span>Mango & Cinnamon</span><strong>135 CZK</strong></div>
-            </div>
-          </div>
+          <p class="section-intro" data-i18n="seasonalIntro">Our homemade drinks change with the seasons. Available hot or iced.</p><span class="season-label" data-i18n="availableNow">Available Now</span>
+          <div class="subsection"><h3>Autumn & Winter</h3><div class="drink-list two-col">
+            <div class="drink-row"><span>Pear & Cinnamon</span><strong>125 CZK</strong></div><div class="drink-row"><span>Blackcurrant</span><strong>135 CZK</strong></div><div class="drink-row"><span>Apricot & Cinnamon</span><strong>125 CZK</strong></div><div class="drink-row"><span>Mango & Apricot</span><strong>135 CZK</strong></div><div class="drink-row"><span>Ginger</span><strong>135 CZK</strong></div><div class="drink-row"><span>Lemon</span><strong>135 CZK</strong></div>
+          </div></div>
+          <div class="subsection" id="spring-summer" hidden><h3>Spring & Summer</h3><div class="drink-list two-col"><div class="drink-row"><span>Strawberry & Mint</span><strong>135 CZK</strong></div><div class="drink-row"><span>Raspberry & Basil</span><strong>135 CZK</strong></div><div class="drink-row"><span>Apricot & Basil</span><strong>135 CZK</strong></div><div class="drink-row"><span>Mango & Passion Fruit</span><strong>135 CZK</strong></div><div class="drink-row"><span>Mango & Cinnamon</span><strong>135 CZK</strong></div></div></div>
         </section>
 
         <section class="category" id="cocktails">
           <div class="category-head"><span class="category-number">05</span><div><p class="eyebrow" data-i18n="laterDay">A LITTLE LATER IN THE DAY</p><h2>COCKTAILS</h2></div></div>
-          <div class="drink-list">
-            <div class="drink-row"><span>Aperol Spritz</span><strong>179 CZK</strong></div>
-            <div class="drink-row"><span>Hugo Spritz</span><strong>169 CZK</strong></div>
-            <div class="drink-row"><span>Campari Spritz</span><strong>190 CZK</strong></div>
-            <div class="drink-row"><span>Passion Vodka</span><strong>175 CZK</strong></div>
-            <div class="drink-row"><span>Espresso Martini</span><strong>190 CZK</strong></div>
-            <div class="drink-row"><span>Toll House Sunset</span><strong>195 CZK</strong></div>
-            <div class="drink-row"><span>Caipirinha</span><strong>190 CZK</strong></div>
-            <div class="drink-row"><span>Skinny Bitch</span><strong>179 CZK</strong></div>
-            <div class="drink-row"><span>Gin Fizz</span><strong>180 CZK</strong></div>
-            <div class="drink-row"><span>Gin & Tonic</span><strong>175 CZK</strong></div>
-            <div class="drink-row"><span>Gin & Soda</span><strong>145 CZK</strong></div>
-            <div class="drink-row"><span>Mojito</span><strong>155 CZK</strong></div>
-            <div class="drink-row"><span>Virgin Mojito <small data-i18n="alcoholFree">alcohol-free</small></span><strong>120 CZK</strong></div>
-          </div>
+          <div class="drink-list two-col"><div class="drink-row"><span>Aperol Spritz</span><strong>179 CZK</strong></div><div class="drink-row"><span>Hugo Spritz</span><strong>169 CZK</strong></div><div class="drink-row"><span>Campari Spritz</span><strong>190 CZK</strong></div><div class="drink-row"><span>Passion Vodka</span><strong>175 CZK</strong></div><div class="drink-row"><span>Espresso Martini</span><strong>190 CZK</strong></div><div class="drink-row"><span>Toll House Sunset</span><strong>195 CZK</strong></div><div class="drink-row"><span>Caipirinha</span><strong>190 CZK</strong></div><div class="drink-row"><span>Skinny Bitch</span><strong>179 CZK</strong></div><div class="drink-row"><span>Gin Fizz</span><strong>180 CZK</strong></div><div class="drink-row"><span>Gin & Tonic</span><strong>175 CZK</strong></div><div class="drink-row"><span>Gin & Soda</span><strong>145 CZK</strong></div><div class="drink-row"><span>Mojito</span><strong>155 CZK</strong></div><div class="drink-row"><span>Virgin Mojito <small data-i18n="alcoholFree">alcohol-free</small></span><strong>120 CZK</strong></div></div>
         </section>
 
         <section class="category" id="soft-drinks">
           <div class="category-head"><span class="category-number">06</span><div><p class="eyebrow" data-i18n="coldReady">COLD & READY</p><h2>BOTTLED SOFT DRINKS</h2></div></div>
-          <div class="drink-list">
-            <div class="drink-row"><span>Schweppes Tonic 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Pink Tonic</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Aquila Still Water 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Aquila Lightly Sparkling Water 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Mattoni Sparkling Water 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Magnesia Focus 0.7 l</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Magnesia Revital 0.7 l</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Magnesia Boost 0.7 l</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Magnesia Antistress 0.7 l</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Mattoni Imuno</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Pepsi 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Pepsi Zero 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Mirinda 0.5 l</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Lipton Ice Tea</span><strong>50 CZK</strong></div>
-            <div class="drink-row"><span>Red Bull</span><strong>70 CZK</strong></div>
-          </div>
+          <div class="drink-list two-col"><div class="drink-row"><span>Schweppes Tonic 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Pink Tonic</span><strong>50 CZK</strong></div><div class="drink-row"><span>Aquila Still Water 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Aquila Lightly Sparkling Water 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Mattoni Sparkling Water 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Magnesia Focus 0.7 l</span><strong>75 CZK</strong></div><div class="drink-row"><span>Magnesia Revital 0.7 l</span><strong>75 CZK</strong></div><div class="drink-row"><span>Magnesia Boost 0.7 l</span><strong>75 CZK</strong></div><div class="drink-row"><span>Magnesia Antistress 0.7 l</span><strong>75 CZK</strong></div><div class="drink-row"><span>Mattoni Imuno</span><strong>75 CZK</strong></div><div class="drink-row"><span>Pepsi 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Pepsi Zero 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Mirinda 0.5 l</span><strong>50 CZK</strong></div><div class="drink-row"><span>Lipton Ice Tea</span><strong>50 CZK</strong></div><div class="drink-row"><span>Red Bull</span><strong>70 CZK</strong></div></div>
         </section>
 
-        <section class="category wide" id="beer-wine-spirits">
+        <section class="category" id="beer-wine-spirits">
           <div class="category-head"><span class="category-number">07</span><div><p class="eyebrow" data-i18n="beerBubbles">BEER, BUBBLES & A POUR</p><h2>BEER, WINE & SPIRITS</h2></div></div>
-          <div class="drink-list two-col">
-            <div class="drink-row"><span>Pilsner Urquell 0.3 l</span><strong>65 CZK</strong></div>
-            <div class="drink-row"><span>Pilsner Urquell 0.5 l</span><strong>85 CZK</strong></div>
-            <div class="drink-row"><span>Prosecco 0.2 l</span><strong>150 CZK</strong></div>
-            <div class="drink-row"><span>Prosecco 0.7 l</span><strong>250 CZK</strong></div>
-            <div class="drink-row"><span>Bohemia Sekt 0.2 l</span><strong>95 CZK</strong></div>
-            <div class="drink-row"><span>Mulled Wine</span><strong>105 CZK</strong></div>
-            <div class="drink-row"><span>Large Mulled Wine</span><strong>125 CZK</strong></div>
-            <div class="drink-row"><span>Grog</span><strong>95 CZK</strong></div>
-            <div class="drink-row"><span>Aperol</span><strong>70 CZK</strong></div>
-            <div class="drink-row"><span>Captain Morgan Spiced</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Jack Daniel’s</span><strong>115 CZK</strong></div>
-            <div class="drink-row"><span>Becherovka</span><strong>115 CZK</strong></div>
-            <div class="drink-row"><span>Vodka</span><strong>115 CZK</strong></div>
-            <div class="drink-row"><span>Jim Beam</span><strong>75 CZK</strong></div>
-            <div class="drink-row"><span>Božkov</span><strong>70 CZK</strong></div>
-            <div class="drink-row"><span>Havana Club</span><strong>115 CZK</strong></div>
-            <div class="drink-row"><span>Gordon’s Gin</span><strong>120 CZK</strong></div>
-            <div class="drink-row"><span>Amaretto</span><strong>115 CZK</strong></div>
-            <div class="drink-row"><span>Limoncello</span><strong>115 CZK</strong></div>
-            <div class="drink-row"><span>Baileys</span><strong class="tbc" data-i18n="tbc">TBC</strong></div>
-          </div>
+          <div class="drink-list two-col"><div class="drink-row"><span>Pilsner Urquell 0.3 l</span><strong>65 CZK</strong></div><div class="drink-row"><span>Pilsner Urquell 0.5 l</span><strong>85 CZK</strong></div><div class="drink-row"><span>Prosecco 0.2 l</span><strong>150 CZK</strong></div><div class="drink-row"><span>Prosecco 0.7 l</span><strong>250 CZK</strong></div><div class="drink-row"><span>Bohemia Sekt 0.2 l</span><strong>95 CZK</strong></div><div class="drink-row"><span>Mulled Wine</span><strong>105 CZK</strong></div><div class="drink-row"><span>Large Mulled Wine</span><strong>125 CZK</strong></div><div class="drink-row"><span>Grog</span><strong>95 CZK</strong></div><div class="drink-row"><span>Aperol</span><strong>70 CZK</strong></div><div class="drink-row"><span>Captain Morgan Spiced</span><strong>75 CZK</strong></div><div class="drink-row"><span>Jack Daniel’s</span><strong>115 CZK</strong></div><div class="drink-row"><span>Becherovka</span><strong>115 CZK</strong></div><div class="drink-row"><span>Vodka</span><strong>115 CZK</strong></div><div class="drink-row"><span>Jim Beam</span><strong>75 CZK</strong></div><div class="drink-row"><span>Božkov</span><strong>70 CZK</strong></div><div class="drink-row"><span>Havana Club</span><strong>115 CZK</strong></div><div class="drink-row"><span>Gordon’s Gin</span><strong>120 CZK</strong></div><div class="drink-row"><span>Amaretto</span><strong>115 CZK</strong></div><div class="drink-row"><span>Limoncello</span><strong>115 CZK</strong></div><div class="drink-row"><span>Baileys</span><strong class="tbc" data-i18n="tbc">TBC</strong></div></div>
         </section>
       </div>
 
-      <section class="footer-card">
-        <div>
-          <p class="eyebrow" data-i18n="littleWindow">FROM THE LITTLE WINDOW</p>
-          <h2 data-i18n="seeYou">See you by the bridge.</h2>
-          <p data-i18n="tbcNote">Prices marked TBC will be updated as soon as they are confirmed.</p>
-        </div>
-        <div class="footer-actions">
-          <a class="button button-dark" href="https://www.google.com/maps/search/?api=1&query=Claudia+Coffee+Vitezna+126%2F1+Prague" target="_blank" rel="noreferrer" data-i18n="directions">Get directions ↗</a>
-          <a class="button button-light" href="https://claudiacoffee.vercel.app/" data-i18n="website">Main website</a>
-        </div>
-      </section>
+      <section class="footer-card"><div><p class="eyebrow" data-i18n="littleWindow">FROM THE LITTLE WINDOW</p><h2 data-i18n="seeYou">See you by the bridge.</h2><p data-i18n="tbcNote">Prices marked TBC will be updated as soon as they are confirmed.</p></div><div class="footer-actions"><a class="button button-dark" href="https://www.google.com/maps/search/?api=1&query=Claudia+Coffee+Vitezna+126%2F1+Prague" target="_blank" rel="noreferrer" data-i18n="directions">Get directions ↗</a><a class="button button-light" href="https://claudiacoffee.vercel.app/" data-i18n="website">Main website</a></div></section>
     </main>
 
-    <footer class="site-footer">
-      <span>© <span id="year"></span> Claudia Coffee</span>
-      <div class="site-footer-links">
-        <a href="https://www.instagram.com/claudia.coffee/" target="_blank" rel="noreferrer">Instagram</a>
-        <a href="https://claudiacoffee.vercel.app/">claudiacoffee.vercel.app</a>
-      </div>
-    </footer>
+    <footer class="site-footer"><span>© <span id="year"></span> Claudia Coffee</span><div class="site-footer-links"><a href="https://www.instagram.com/claudia.coffee/" target="_blank" rel="noreferrer">Instagram</a><a href="https://claudiacoffee.vercel.app/">claudiacoffee.vercel.app</a></div></footer>
   </div>
 
-  <button class="back-to-top" type="button" id="back-to-top" aria-label="Go to the top of the page">
-    <span aria-hidden="true">↑</span><small data-i18n="top">Top</small>
-  </button>
+  <button class="back-to-top" type="button" id="back-to-top" aria-label="Go to the top of the page"><span aria-hidden="true">↑</span><small data-i18n="top">Top</small></button>
 
   <script>
-    const translations = {
-      en: {
-        lead: "Coffee classics, colourful specialties, homemade seasonal drinks and something stronger for later in the day.",
-        prices: "Prices in CZK",
-        order: "Order at the window",
-        overviewLabel: "7 sections",
-        overviewTitle: "One menu",
-        seasonNow: "Autumn & Winter menu available now",
-        coffeeEyebrow: "THE ESSENTIALS",
-        containsAlcohol: "contains alcohol",
-        tbc: "TBC",
-        makeItYours: "Make it yours",
-        coffeeExtras: "Coffee extras",
-        colourCup: "COLOUR IN A CUP",
-        richWarm: "RICH & WARM",
-        thickCreamy: "Extra thick and creamy.",
-        madeHouse: "MADE IN HOUSE",
-        seasonalIntro: "Our homemade drinks change with the seasons. Available hot or iced.",
-        availableNow: "Available Now",
-        laterDay: "A LITTLE LATER IN THE DAY",
-        alcoholFree: "alcohol-free",
-        coldReady: "COLD & READY",
-        beerBubbles: "BEER, BUBBLES & A POUR",
-        littleWindow: "FROM THE LITTLE WINDOW",
-        seeYou: "See you by the bridge.",
-        tbcNote: "Prices marked TBC will be updated as soon as they are confirmed.",
-        directions: "Get directions ↗",
-        website: "Main website",
-        top: "Top"
-      },
-      cs: {
-        lead: "Kávové klasiky, barevné speciality, domácí sezónní nápoje a něco silnějšího na později.",
-        prices: "Ceny v CZK",
-        order: "Objednávka u okénka",
-        overviewLabel: "7 sekcí",
-        overviewTitle: "Jedno menu",
-        seasonNow: "Podzimní a zimní nabídka je právě k dispozici",
-        coffeeEyebrow: "ZÁKLADNÍ NABÍDKA",
-        containsAlcohol: "obsahuje alkohol",
-        tbc: "BUDE DOPLNĚNO",
-        makeItYours: "Upravte si podle sebe",
-        coffeeExtras: "Doplňky ke kávě",
-        colourCup: "BARVA V ŠÁLKU",
-        richWarm: "HUTNÉ A HŘEJIVÉ",
-        thickCreamy: "Extra hustá a krémová.",
-        madeHouse: "DOMÁCÍ VÝROBA",
-        seasonalIntro: "Naše domácí nápoje se mění podle sezóny. K dispozici horké nebo ledové.",
-        availableNow: "Právě v nabídce",
-        laterDay: "NA POZDĚJI BĚHEM DNE",
-        alcoholFree: "bez alkoholu",
-        coldReady: "STUDENÉ A PŘIPRAVENÉ",
-        beerBubbles: "PIVO, BUBLINKY A PANÁK",
-        littleWindow: "Z NAŠEHO MALÉHO OKÉNKA",
-        seeYou: "Uvidíme se u mostu.",
-        tbcNote: "Ceny označené jako BUDE DOPLNĚNO aktualizujeme, jakmile budou potvrzené.",
-        directions: "Navigovat ↗",
-        website: "Hlavní web",
-        top: "Nahoru"
-      },
-      fr: {
-        lead: "Classiques du café, spécialités colorées, boissons maison de saison et quelque chose de plus corsé pour plus tard.",
-        prices: "Prix en CZK",
-        order: "Commande au comptoir",
-        overviewLabel: "7 sections",
-        overviewTitle: "Un seul menu",
-        seasonNow: "La carte Automne & Hiver est disponible maintenant",
-        coffeeEyebrow: "LES ESSENTIELS",
-        containsAlcohol: "contient de l'alcool",
-        tbc: "À CONFIRMER",
-        makeItYours: "À votre façon",
-        coffeeExtras: "Suppléments café",
-        colourCup: "DE LA COULEUR DANS LA TASSE",
-        richWarm: "RICHE ET RÉCONFORTANT",
-        thickCreamy: "Très épais et crémeux.",
-        madeHouse: "FAIT MAISON",
-        seasonalIntro: "Nos boissons maison changent avec les saisons. Disponibles chaudes ou glacées.",
-        availableNow: "Disponible maintenant",
-        laterDay: "POUR PLUS TARD DANS LA JOURNÉE",
-        alcoholFree: "sans alcool",
-        coldReady: "FRAIS ET PRÊT",
-        beerBubbles: "BIÈRE, BULLES ET SPIRITUEUX",
-        littleWindow: "DEPUIS NOTRE PETITE FENÊTRE",
-        seeYou: "À bientôt près du pont.",
-        tbcNote: "Les prix indiqués À CONFIRMER seront mis à jour dès qu'ils seront confirmés.",
-        directions: "Itinéraire ↗",
-        website: "Site principal",
-        top: "Haut"
-      }
+    const translations={
+      en:{lead:"Coffee classics, colourful specialties, homemade seasonal drinks and something stronger for later in the day.",prices:"Prices in CZK",order:"Order at the window",overviewLabel:"7 sections",overviewTitle:"One menu",seasonNow:"Autumn & Winter menu available now",coffeeEyebrow:"THE ESSENTIALS",containsAlcohol:"contains alcohol",tbc:"TBC",makeItYours:"Make it yours",coffeeExtras:"Coffee extras",colourCup:"COLOUR IN A CUP",richWarm:"RICH & WARM",thickCreamy:"Extra thick and creamy.",madeHouse:"MADE IN HOUSE",seasonalIntro:"Our homemade drinks change with the seasons. Available hot or iced.",availableNow:"Available Now",laterDay:"A LITTLE LATER IN THE DAY",alcoholFree:"alcohol-free",coldReady:"COLD & READY",beerBubbles:"BEER, BUBBLES & A POUR",littleWindow:"FROM THE LITTLE WINDOW",seeYou:"See you by the bridge.",tbcNote:"Prices marked TBC will be updated as soon as they are confirmed.",directions:"Get directions ↗",website:"Main website",top:"Top"},
+      cs:{lead:"Kávové klasiky, barevné speciality, domácí sezónní nápoje a něco silnějšího na později.",prices:"Ceny v CZK",order:"Objednávka u okénka",overviewLabel:"7 sekcí",overviewTitle:"Jedno menu",seasonNow:"Podzimní a zimní nabídka je právě k dispozici",coffeeEyebrow:"ZÁKLADNÍ NABÍDKA",containsAlcohol:"obsahuje alkohol",tbc:"BUDE DOPLNĚNO",makeItYours:"Upravte si podle sebe",coffeeExtras:"Doplňky ke kávě",colourCup:"BARVA V ŠÁLKU",richWarm:"HUTNÉ A HŘEJIVÉ",thickCreamy:"Extra hustá a krémová.",madeHouse:"DOMÁCÍ VÝROBA",seasonalIntro:"Naše domácí nápoje se mění podle sezóny. K dispozici horké nebo ledové.",availableNow:"Právě v nabídce",laterDay:"NA POZDĚJI BĚHEM DNE",alcoholFree:"bez alkoholu",coldReady:"STUDENÉ A PŘIPRAVENÉ",beerBubbles:"PIVO, BUBLINKY A PANÁK",littleWindow:"Z NAŠEHO MALÉHO OKÉNKA",seeYou:"Uvidíme se u mostu.",tbcNote:"Ceny označené jako BUDE DOPLNĚNO aktualizujeme, jakmile budou potvrzené.",directions:"Navigovat ↗",website:"Hlavní web",top:"Nahoru"},
+      fr:{lead:"Classiques du café, spécialités colorées, boissons maison de saison et quelque chose de plus corsé pour plus tard.",prices:"Prix en CZK",order:"Commande au comptoir",overviewLabel:"7 sections",overviewTitle:"Un seul menu",seasonNow:"La carte Automne & Hiver est disponible maintenant",coffeeEyebrow:"LES ESSENTIELS",containsAlcohol:"contient de l'alcool",tbc:"À CONFIRMER",makeItYours:"À votre façon",coffeeExtras:"Suppléments café",colourCup:"DE LA COULEUR DANS LA TASSE",richWarm:"RICHE ET RÉCONFORTANT",thickCreamy:"Très épais et crémeux.",madeHouse:"FAIT MAISON",seasonalIntro:"Nos boissons maison changent avec les saisons. Disponibles chaudes ou glacées.",availableNow:"Disponible maintenant",laterDay:"POUR PLUS TARD DANS LA JOURNÉE",alcoholFree:"sans alcool",coldReady:"FRAIS ET PRÊT",beerBubbles:"BIÈRE, BULLES ET SPIRITUEUX",littleWindow:"DEPUIS NOTRE PETITE FENÊTRE",seeYou:"À bientôt près du pont.",tbcNote:"Les prix indiqués À CONFIRMER seront mis à jour dès qu'ils seront confirmés.",directions:"Itinéraire ↗",website:"Site principal",top:"Haut"}
     };
-
-    const applyLanguage = (lang) => {
-      const copy = translations[lang] || translations.en;
-      document.documentElement.lang = lang === "cs" ? "cs" : lang;
-      document.querySelectorAll("[data-i18n]").forEach((el) => {
-        const key = el.dataset.i18n;
-        if (copy[key]) el.textContent = copy[key];
-      });
-      document.querySelectorAll("[data-lang]").forEach((btn) => {
-        btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
-      });
-      try { localStorage.setItem("claudia-menu-lang", lang); } catch (_) {}
-    };
-
-    let initial = "en";
-    try {
-      const saved = localStorage.getItem("claudia-menu-lang");
-      if (saved && translations[saved]) initial = saved;
-    } catch (_) {}
-    applyLanguage(initial);
-
-    document.querySelectorAll("[data-lang]").forEach((btn) => {
-      btn.addEventListener("click", () => applyLanguage(btn.dataset.lang));
-    });
-
-    const logo = document.getElementById("brand-logo");
-    const fallback = document.getElementById("brand-fallback");
-    logo.addEventListener("error", () => {
-      logo.style.display = "none";
-      fallback.style.display = "grid";
-    });
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const backToTop = document.getElementById("back-to-top");
-    const updateTopButton = () => backToTop.classList.toggle("show", window.scrollY > 520);
-    updateTopButton();
-    window.addEventListener("scroll", updateTopButton, { passive: true });
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    });
+    const applyLanguage=(lang)=>{const copy=translations[lang]||translations.en;document.documentElement.lang=lang==="cs"?"cs":lang;document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(copy[key])el.textContent=copy[key]});document.querySelectorAll("[data-lang]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.lang===lang)));try{localStorage.setItem("claudia-menu-lang",lang)}catch(_){}};
+    let initial="en";try{const saved=localStorage.getItem("claudia-menu-lang");if(saved&&translations[saved])initial=saved}catch(_){}applyLanguage(initial);
+    document.querySelectorAll("[data-lang]").forEach(btn=>btn.addEventListener("click",()=>applyLanguage(btn.dataset.lang)));
+    const logo=document.getElementById("brand-logo"),fallback=document.getElementById("brand-fallback");logo.addEventListener("error",()=>{logo.style.display="none";fallback.style.display="grid"});
+    document.getElementById("year").textContent=new Date().getFullYear();
+    const backToTop=document.getElementById("back-to-top");const updateTopButton=()=>backToTop.classList.toggle("show",window.scrollY>520);updateTopButton();window.addEventListener("scroll",updateTopButton,{passive:true});backToTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
   </script>
 </body>
 </html>
